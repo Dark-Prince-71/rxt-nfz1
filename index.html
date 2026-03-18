@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RXT NFZ TOUR — #১ গসিং প্ল্যাটফর্ম</title>
+  <!-- live colour grading & effects with CSS + subtle JS particles -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', 'Hind Siliguri', system-ui, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 30% 10%, #1b2a2f, #0b0f14 80%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      position: relative;
+      overflow-x: hidden;
+      color: #fff;
+      /* live colour grading overlay via pseudo-element */
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(145deg, rgba(255, 180, 40, 0.08) 0%, rgba(0, 255, 200, 0.03) 60%, rgba(150, 0, 255, 0.05) 100%);
+      pointer-events: none;
+      z-index: 0;
+      mix-blend-mode: overlay;
+    }
+
+    /* floating particles (live effect) */
+    .particle-field {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: rgba(255, 200, 100, 0.25);
+      border-radius: 50%;
+      box-shadow: 0 0 12px #ffaa33, 0 0 20px #7df0ff;
+      animation: floatGlow 8s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatGlow {
+      0% { transform: translateY(0) translateX(0) scale(0.8); opacity: 0.3; filter: hue-rotate(0deg); }
+      50% { transform: translateY(-40px) translateX(15px) scale(1.6); opacity: 0.9; filter: hue-rotate(30deg) brightness(1.3); }
+      100% { transform: translateY(-70px) translateX(-10px) scale(1.0); opacity: 0.5; filter: hue-rotate(60deg); }
+    }
+
+    /* main card — glass + live edge glow */
+    .tour-card {
+      position: relative;
+      z-index: 10;
+      max-width: 500px;
+      width: 100%;
+      background: rgba(10, 20, 25, 0.65);
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
+      border: 1px solid rgba(255, 220, 120, 0.25);
+      border-radius: 48px 24px 48px 24px;
+      box-shadow: 0 40px 70px rgba(0, 0, 0, 0.7), 0 0 0 2px rgba(255, 160, 0, 0.15) inset, 0 0 30px #ffb34755;
+      padding: 2rem 1.8rem;
+      transition: box-shadow 0.3s, border-color 0.3s;
+      animation: cardPulse 6s infinite alternate;
+    }
+
+    @keyframes cardPulse {
+      0% { box-shadow: 0 40px 70px #000000cc, 0 0 0 2px rgba(255, 180, 40, 0.2) inset, 0 0 30px #ffae42; }
+      50% { box-shadow: 0 45px 80px #001d1d, 0 0 0 3px rgba(0, 255, 200, 0.3) inset, 0 0 50px #2ef7f7; }
+      100% { box-shadow: 0 40px 70px #000, 0 0 0 2px rgba(255, 160, 255, 0.25) inset, 0 0 40px #c15dff; }
+    }
+
+    /* image section — live colour embedded */
+    .image-block {
+      width: 100%;
+      border-radius: 32px 16px 32px 16px;
+      overflow: hidden;
+      margin-bottom: 1.8rem;
+      border: 2px solid rgba(255, 215, 0, 0.5);
+      box-shadow: 0 20px 30px -10px black, 0 0 30px #ffd966;
+      transition: all 0.25s;
+    }
+
+    .image-block img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: contrast(1.1) brightness(1.05) saturate(1.2);
+      /* live colour grading via filter */
+      transition: filter 0.4s ease;
+    }
+
+    .image-block:hover img {
+      filter: contrast(1.2) brightness(1.15) saturate(1.5) hue-rotate(2deg);
+    }
+
+    /* typography */
+    .tour-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-align: center;
+      text-shadow: 0 0 10px cyan, 0 0 20px orange;
+      background: linear-gradient(135deg, #ffe99c, #ffd27f, #c0fffd);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.4rem;
+      line-height: 1.2;
+    }
+
+    .tour-sub {
+      font-size: 1rem;
+      text-align: center;
+      color: #ccdee8;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      word-spacing: 6px;
+      background: #1e2f38aa;
+      display: inline-block;
+      padding: 0.4rem 1.2rem;
+      margin: 0 auto 0.8rem;
+      border-radius: 40px;
+      backdrop-filter: blur(4px);
+      border: 1px solid #ffb85b;
+    }
+
+    .rank-badge {
+      display: flex;
+      justify-content: center;
+      gap: 1.8rem;
+      margin: 1.8rem 0 1.2rem;
+      font-weight: 700;
+    }
+
+    .rank-item {
+      background: #00000055;
+      border-radius: 40px;
+      padding: 0.7rem 1.5rem;
+      backdrop-filter: blur(4px);
+      border: 1px solid #ffb45b;
+      box-shadow: 0 0 15px currentColor;
+      color: #fff5d0;
+      transition: 0.2s;
+      font-size: 1.1rem;
+    }
+
+    .rank-item span {
+      font-size: 1.9rem;
+      font-weight: 800;
+      display: block;
+      line-height: 1;
+      color: #fee7a0;
+      text-shadow: 0 0 12px #ffae00;
+    }
+
+    .description {
+      text-align: center;
+      margin: 1.5rem 0 2rem;
+      font-size: 1.25rem;
+      background: linear-gradient(145deg, #b5f0ff30, #ffc8a030);
+      padding: 1rem;
+      border-radius: 60px 20px 60px 20px;
+      border-left: 4px solid #ffb469;
+      border-right: 4px solid #6ef7ff;
+      font-weight: 500;
+      backdrop-filter: blur(8px);
+      color: #f0f9ff;
+      word-spacing: 2px;
+      box-shadow: 0 10px 20px #00000040;
+    }
+
+    /* download button — exact link */
+    .download-section {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .download-btn {
+      display: inline-block;
+      background: linear-gradient(145deg, #feb23b, #fd8f2e, #ff5e7c);
+      color: #0f1217;
+      font-weight: 800;
+      font-size: 2rem;
+      padding: 1.2rem 2.8rem;
+      border-radius: 60px 20px 60px 20px;
+      text-decoration: none;
+      box-shadow: 0 0 35px #ffb347, 0 20px 30px #00000080;
+      letter-spacing: 3px;
+      backdrop-filter: blur(10px);
+      border: 2px solid #fff9e6;
+      transition: 0.25s;
+      text-transform: uppercase;
+      transform: scale(1);
+    }
+
+    .download-btn:hover {
+      transform: scale(1.05) translateY(-5px);
+      background: linear-gradient(145deg, #ffc75f, #ffa53e, #ff6f91);
+      box-shadow: 0 0 60px #ffee88, 0 25px 40px black;
+      border-color: #fbf8b0;
+    }
+
+    /* footer note / regular players line */
+    .regular-note {
+      margin-top: 2.5rem;
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: 600;
+      background: #101c23aa;
+      padding: 0.7rem 1.5rem;
+      border-radius: 80px;
+      backdrop-filter: blur(4px);
+      border: 1px solid #ffb249;
+      color: #fbeccd;
+      display: inline-block;
+      width: auto;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 0 20px #f5b042;
+    }
+
+    .regular-note small {
+      font-size: 0.9rem;
+      display: block;
+      color: #b9f3ff;
+    }
+
+    /* bengali & stylish adjustments */
+    .brand-bn {
+      font-size: 1.7rem;
+      font-weight: 700;
+      line-height: 1.3;
+      text-align: center;
+      color: #ffe492;
+      text-shadow: 0 0 15px rgb(0 255 235);
+    }
+
+    /* positioning */
+    .center-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- live particles (floating glow) -->
+  <div class="particle-field" id="particleField"></div>
+
+  <!-- main card -->
+  <main class="tour-card">
+    <div class="center-wrap">
+      <!-- title like image: RXT NFZ TOUR - সগসিং প্ল্যাটফার্স (original spelling kept) -->
+      <div class="brand-bn">RXT NFZ TOUR</div>
+      <div class="tour-sub">সগসিং প্ল্যাটফার্স</div>
+
+      <!-- main image with given link -->
+      <div class="image-block">
+        <img src="https://i.ibb.co.com/LznQJYV8/image.jpg" alt="RXT NFZ TOUR গসিং প্ল্যাটফর্ম" title="RXT NFZ live grading">
+      </div>
+
+      <!-- #১ গসিং প্ল্যাটফার্স  (as per text) -->
+      <div class="tour-title">#১ গসিং প্ল্যাটফার্স</div>
+      
+      <!-- middle line: খেলুন · জিফুন · উপজোঁক কুকন (original kept) -->
+      <div style="font-size: 1.5rem; margin: 0.2rem 0 0.5rem; color: #ffe1a4; text-shadow: 2px 2px 0 #00000060; letter-spacing: 1px;">
+        খেলুন · জিফুন · উপজোঁক কুকন
+      </div>
+
+      <!-- আগে ভাইনের লাউ কুকন (original phrase) -->
+      <div style="background: #2d1f0e80; border-radius: 40px; padding: 0.6rem 1.8rem; margin: 0.7rem 0; backdrop-filter: blur(5px); border: 1px solid #ffcf8a; color: #ffdba5; font-size: 1.3rem;">
+        আগে ভাইনের লাউ কুকন
+      </div>
+
+      <!-- rank badges: ৩য় জোর+ Downloads  / ১০য় জোর+ Regular Players -->
+      <div class="rank-badge">
+        <div class="rank-item"><span>৩য় জোর+</span> Downloads</div>
+        <div class="rank-item"><span>১০য় জোর+</span> Regular Players</div>
+      </div>
+
+      <!-- small description line from original (copy) -->
+      <div class="description">
+        বাংলাদেশের সেরা গেমিং এক্সপেরিয়েন্স
+      </div>
+
+      <!-- download button with EXACT google drive link -->
+      <div class="download-section">
+        <a href="https://drive.google.com/file/d/19V4kglC5pKU_uMBKI4RhjYi8N5A-X7nh/view?usp=drivesdk" 
+           class="download-btn" 
+           target="_blank" 
+           rel="noopener noreferrer">
+          ⬇ ডাউনলোড
+        </a>
+      </div>
+
+      <!-- extra regular players line (explicit) -->
+      <div class="regular-note">
+        🎮 ১০য় জোর+ রেগুলার প্লেয়ার 🎯
+        <small>লাইভ কালার গ্রেডিং • ইফেক্টস</small>
+      </div>
+    </div>
+  </main>
+
+  <!-- live particle generation (dynamic, subtle) -->
+  <script>
+    (function createParticles() {
+      const container = document.getElementById('particleField');
+      const numberOfParticles = 35; 
+
+      for (let i = 0; i < numberOfParticles; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+
+        // random size between 3px and 11px
+        const size = 4 + Math.random() * 8;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+
+        // random position
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+
+        // random delay & duration for live chaotic effect
+        const animDuration = 5 + Math.random() * 12;
+        const delay = Math.random() * 8;
+        particle.style.animation = `floatGlow ${animDuration}s infinite alternate ease-in-out`;
+        particle.style.animationDelay = delay + 's';
+
+        // random colour grading via background
+        const hue = 30 + Math.random() * 80; // 30-110 -> gold to cyan
+        particle.style.background = `rgba(${255}, ${200 + Math.random() * 55}, ${100}, 0.4)`;
+        particle.style.boxShadow = `0 0 ${10 + Math.random() * 25}px #ffd966, 0 0 30px #5df0ff`;
+        particle.style.filter = `hue-rotate(${Math.random() * 30}deg)`;
+
+        container.appendChild(particle);
+      }
+    })();
+
+    // tiny extra live colour shifting on card border (just for fun)
+    setInterval(() => {
+      const card = document.querySelector('.tour-card');
+      if (card) {
+        // subtle border glow shift - live grading
+        const hueShift = Math.sin(Date.now() / 1800) * 10 + 20;
+        card.style.borderColor = `hsl(${45 + hueShift}, 90%, 65%)`;
+      }
+    }, 200);
+  </script>
+
+  <!-- ensure bengali font fallback -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* force Bengali font */
+    body, .tour-card, .brand-bn, .tour-sub, .description, .rank-item, .regular-note, .download-btn {
+      font-family: 'Hind Siliguri', 'Segoe UI', sans-serif;
+    }
+  </style>
+</body>
+</html>
